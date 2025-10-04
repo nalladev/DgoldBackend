@@ -105,6 +105,11 @@ class DatabaseManager {
     }
   }
 
+  // Fetch all registrations
+  getAllRegistrations() {
+    return this.db.prepare('SELECT * FROM registrations').all();
+  }
+
 
 
   close() {
@@ -127,6 +132,17 @@ const db = DatabaseManager.getInstance();
 // Health check endpoint
 app.get('/ping', (_req: any, res: any) => {
   res.status(200).send('Pong!');
+});
+
+// Testing endpoint: Get all registrations
+app.get('/registrations', (_req: any, res: any) => {
+  try {
+    const rows = db.getAllRegistrations();
+    res.status(200).json({ success: true, data: rows });
+  } catch (error) {
+    console.error('Error fetching registrations:', error);
+    res.status(500).json({ success: false, error: 'Failed to fetch registrations' });
+  }
 });
 
 app.post('/submit', (req: any, res: any) => {
