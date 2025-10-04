@@ -223,9 +223,10 @@ app.post('/submit', (req: any, res: any) => {
 // Start server
 
 app.listen(PORT, () => {
+  const origin = process.env.ORIGIN || `http://localhost:${PORT}`;
   console.log(`🚀 Database server running on port ${PORT}`);
-  console.log(` API endpoint: POST http://localhost:${PORT}/submit`);
-  console.log(` Health check: GET http://localhost:${PORT}/ping`);
+  console.log(` API endpoint: POST ${origin}/submit`);
+  console.log(` Health check: GET ${origin}/ping`);
 });
 
 // Self-ping every 10 minutes to keep the process alive on Render
